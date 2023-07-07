@@ -31,7 +31,7 @@ def draw_figure(canvas, figure):
     return figure_canvas_agg
 
 
-def draw_linear_regression(window, x, y):
+def draw_linear_regression(window, x, y, name):
     result, r_sq, coef, intercept = linear_regression(x, y)
 
     fig = figure.Figure(figsize=(5, 4), dpi=100)
@@ -45,7 +45,8 @@ def draw_linear_regression(window, x, y):
     mpl.use("TkAgg")
 
     layout = [
-        [sg.Text("Plot test")],
+        # [sg.Image(filename=".\Assets\CParkerLogo.png", size=(100, 100), pad=(10, 10))],
+        [sg.Text(name)],
         [sg.Canvas(key="-CANVAS-")],
         # [sg.Button("OK")],
         [
@@ -132,7 +133,7 @@ def main():
     ]
 
     window = sg.Window(
-        "Matplotlib Single Graph",
+        "File Selector",
         layout,
         location=(0, 0),
         finalize=True,
@@ -149,14 +150,14 @@ def main():
             break
 
         elif event == "Run Regression":
-            print(values["-FILEIN-"])
+            # print(values["-FILEIN-"])
             if check_not_empty(values["-FILEIN-"]):
                 x_in, y_in = read_clean_sort_data(values["-FILEIN-"])
 
-                print(x_in)
-                print(y_in)
+                # print(x_in)
+                # print(y_in)
 
-                draw_linear_regression(window, x_in, y_in)
+                draw_linear_regression(window, x_in, y_in, values["-FILEIN-"])
 
             else:
                 print("please select a valid .csv file")
